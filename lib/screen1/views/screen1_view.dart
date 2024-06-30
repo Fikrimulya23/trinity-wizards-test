@@ -26,7 +26,11 @@ class Screen1View extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              //
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return Screen2Controller();
+                },
+              ));
             },
             icon: Icon(
               Icons.add,

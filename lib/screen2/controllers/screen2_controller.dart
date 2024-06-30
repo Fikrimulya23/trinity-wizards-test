@@ -12,10 +12,10 @@ import 'package:trinity_wizards_test/screen2/views/screen2_view.dart';
 class Screen2Controller extends StatefulWidget {
   const Screen2Controller({
     super.key,
-    required this.contactModel,
+    this.contactModel,
   });
 
-  final ContactModel contactModel;
+  final ContactModel? contactModel;
 
   @override
   State<Screen2Controller> createState() => _Screen2ControllerState();
@@ -29,22 +29,19 @@ class _Screen2ControllerState extends State<Screen2Controller> {
   String id = "";
   @override
   void initState() {
-    id = widget.contactModel.id!;
-    firstNameController.text = widget.contactModel.firstName ?? "";
-    lastNameController.text = widget.contactModel.lastName ?? "";
-    emailController.text = widget.contactModel.email ?? "";
-    /* dobController.text = (widget.contactModel.dob != null)
-        ? DateFormat('dd MMMM yyyy')
-            .format(DateTime.parse(widget.contactModel.dob.toString()))
-        : DateTime.now().toString(); */
-    dobController.text = widget.contactModel.dob ?? "";
+    if (widget.contactModel != null) {
+      id = widget.contactModel!.id!;
+      firstNameController.text = widget.contactModel!.firstName ?? "";
+      lastNameController.text = widget.contactModel!.lastName ?? "";
+      emailController.text = widget.contactModel!.email ?? "";
+      dobController.text = widget.contactModel!.dob ?? "";
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Screen2View(
-      contactModel: widget.contactModel,
       firstNameController: firstNameController,
       lastNameController: lastNameController,
       emailController: emailController,
@@ -71,13 +68,19 @@ class _Screen2ControllerState extends State<Screen2Controller> {
   //
   updateItem() {
     ContactModel contactModel = ContactModel(
-      id: widget.contactModel.id,
+      // id: widget.contactModel!.id,
       firstName: firstNameController.text,
       lastName: lastNameController.text,
       email: emailController.text,
       dob: dobController.text,
     );
-    contactsProvider.updateData(contactModel);
+
+    if (id.isEmpty) {
+      contactsProvider.addData(contactModel);
+    } else {
+      contactModel.id = id;
+      contactsProvider.updateData(contactModel);
+    }
 
     Navigator.pop(context);
   }

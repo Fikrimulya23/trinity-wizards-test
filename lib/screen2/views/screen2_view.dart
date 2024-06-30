@@ -5,7 +5,6 @@ import 'package:trinity_wizards_test/screen1/models/screen1_model.dart';
 class Screen2View extends StatelessWidget {
   const Screen2View({
     super.key,
-    required this.contactModel,
     required this.firstNameController,
     required this.lastNameController,
     required this.emailController,
@@ -14,7 +13,6 @@ class Screen2View extends StatelessWidget {
     required this.updateItem,
   });
 
-  final ContactModel contactModel;
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;
   final TextEditingController emailController;

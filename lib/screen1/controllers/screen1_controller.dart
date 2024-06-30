@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:trinity_wizards_test/main.dart';
 import 'package:trinity_wizards_test/screen1/models/screen1_model.dart';
 import 'package:trinity_wizards_test/screen1/views/screen1_view.dart';
@@ -17,6 +18,10 @@ class Screen1Controller extends StatefulWidget {
 
 class _Screen1ControllerState extends State<Screen1Controller> {
   late List<ContactModel> listContacts = [];
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  bool isSearch = false;
 
   @override
   void initState() {
@@ -29,15 +34,15 @@ class _Screen1ControllerState extends State<Screen1Controller> {
 
   @override
   Widget build(BuildContext context) {
-    /*  return Screen1View(
-      listContactModel: listContactModel,
-    ); */
-    return Consumer<ContactsProvider>(builder: (context, value, child) {
-      contactsProvider = value;
-      listContacts = contactsProvider.list;
-      return Screen1View(
-        listContactModel: listContacts,
-      );
-    });
+    return SmartRefresher(
+      controller: _refreshController,
+      child: Consumer<ContactsProvider>(builder: (context, value, child) {
+        contactsProvider = value;
+        listContacts = contactsProvider.list;
+        return Screen1View(
+          listContactModel: listContacts,
+        );
+      }),
+    );
   }
 }

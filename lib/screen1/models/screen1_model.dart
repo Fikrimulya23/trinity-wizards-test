@@ -56,6 +56,11 @@ class ContactsProvider with ChangeNotifier {
     }
   }
 
+  addData(ContactModel contactModel) {
+    _list.add(contactModel);
+    notifyListeners();
+  }
+
   updateData(ContactModel contactModel) {
     int index = _list.indexWhere((item) => item.id == contactModel.id);
     _list[index] = contactModel;
