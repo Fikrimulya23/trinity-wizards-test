@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trinity_wizards_test/screen1/controllers/screen1_controller.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const Screen1Controller(),
     );
   }
 }
