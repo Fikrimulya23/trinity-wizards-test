@@ -19,9 +19,7 @@ class _Screen1ControllerState extends State<Screen1Controller> {
     final data = await jsonDecode(response);
     List<ContactModel> listContactModel = [];
 
-    // log("data");
-    // log(data[0].toString());
-    for (int i = 0; i < data.length; i++) {
+    for (int i = 0; i < data.length - 1; i++) {
       listContactModel.add(ContactModel.fromJson(data[i]));
     }
     // log(listContactModel[data.length - 1].toJson().toString());
@@ -30,9 +28,6 @@ class _Screen1ControllerState extends State<Screen1Controller> {
 
   @override
   Widget build(BuildContext context) {
-    /* return Screen1View(
-      getData: getData,
-    ); */
     return FutureBuilder<List<ContactModel>>(
       future: getData(),
       builder: (context, snapshot) {
