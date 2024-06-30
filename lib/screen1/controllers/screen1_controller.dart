@@ -3,6 +3,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:trinity_wizards_test/main.dart';
 import 'package:trinity_wizards_test/screen1/models/screen1_model.dart';
 import 'package:trinity_wizards_test/screen1/views/screen1_view.dart';
 
@@ -14,45 +16,28 @@ class Screen1Controller extends StatefulWidget {
 }
 
 class _Screen1ControllerState extends State<Screen1Controller> {
-  Future<List<ContactModel>> getData() async {
-    final String response = await rootBundle.loadString('assets/data.json');
-    final data = await jsonDecode(response);
-    List<ContactModel> listContactModel = [];
+  late List<ContactModel> listContacts = [];
 
-    for (int i = 0; i < data.length - 1; i++) {
-      listContactModel.add(ContactModel.fromJson(data[i]));
-    }
-    // log(listContactModel[data.length - 1].toJson().toString());
-    return listContactModel;
+  @override
+  void initState() {
+    Future.delayed(const Duration(milliseconds: 1)).then((_) async {
+      contactsProvider.initData(true);
+    });
+
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<ContactModel>>(
-      future: getData(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(
-              strokeWidth: 3,
-              color: Colors.white,
-              backgroundColor: Colors.grey,
-            ),
-          );
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // return _loadingContainer();
-        }
-        if (snapshot.hasData) {
-          return Screen1View(
-            listContactModel: snapshot.data!,
-          );
-        }
-        if (snapshot.hasError) {
-          // return _errorContainer(snapshot.data.toString());
-        }
-        return const SizedBox();
-      },
-    );
+    /*  return Screen1View(
+      listContactModel: listContactModel,
+    ); */
+    return Consumer<ContactsProvider>(builder: (context, value, child) {
+      contactsProvider = value;
+      listContacts = contactsProvider.list;
+      return Screen1View(
+        listContactModel: listContacts,
+      );
+    });
   }
 }

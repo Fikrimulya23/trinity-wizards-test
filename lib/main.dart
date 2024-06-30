@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 import 'package:trinity_wizards_test/screen1/controllers/screen1_controller.dart';
 import 'package:trinity_wizards_test/screen1/models/screen1_model.dart';
 
-List<ContactModel> listContactModel = [];
+ContactsProvider contactsProvider = ContactsProvider();
 
 void main() {
-  runApp(const MyApp());
+  var _listProviders = <SingleChildStatelessWidget>[];
+
+  _listProviders.addAll([
+    ChangeNotifierProvider<ContactsProvider>(
+      create: (context) => ContactsProvider(),
+    ),
+  ]);
+  runApp(MultiProvider(providers: _listProviders, child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

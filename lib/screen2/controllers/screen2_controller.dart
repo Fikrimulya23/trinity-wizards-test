@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:trinity_wizards_test/main.dart';
 import 'package:trinity_wizards_test/screen1/controllers/screen1_controller.dart';
 import 'package:trinity_wizards_test/screen1/models/screen1_model.dart';
@@ -71,6 +70,15 @@ class _Screen2ControllerState extends State<Screen2Controller> {
 
   //
   updateItem() {
-    //
+    ContactModel contactModel = ContactModel(
+      id: widget.contactModel.id,
+      firstName: firstNameController.text,
+      lastName: lastNameController.text,
+      email: emailController.text,
+      dob: dobController.text,
+    );
+    contactsProvider.updateData(contactModel);
+
+    Navigator.pop(context);
   }
 }

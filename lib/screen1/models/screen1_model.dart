@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 class ContactModel {
   String? id;
   String? firstName;
@@ -35,4 +38,27 @@ class ContactModel {
         "email": email,
         "dob": dob,
       };
+}
+
+class ContactsProvider with ChangeNotifier {
+  List<ContactModel> _list = [];
+  List<ContactModel> get list => _list;
+
+  initData(bool initData) async {
+    if (initData) {
+      final String response = await rootBundle.loadString('assets/data.json');
+      final data = await jsonDecode(response);
+
+      for (int i = 0; i < data.length - 1; i++) {
+        _list.add(ContactModel.fromJson(data[i]));
+      }
+      notifyListeners();
+    }
+  }
+
+  updateData(ContactModel contactModel) {
+    int index = _list.indexWhere((item) => item.id == contactModel.id);
+    _list[index] = contactModel;
+    notifyListeners();
+  }
 }
