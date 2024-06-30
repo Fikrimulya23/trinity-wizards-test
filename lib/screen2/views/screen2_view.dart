@@ -11,6 +11,7 @@ class Screen2View extends StatelessWidget {
     required this.emailController,
     required this.dobController,
     required this.selectDate,
+    required this.updateItem,
   });
 
   final ContactModel contactModel;
@@ -20,6 +21,7 @@ class Screen2View extends StatelessWidget {
   final TextEditingController dobController;
 
   final Function(BuildContext) selectDate;
+  final Function() updateItem;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +41,8 @@ class Screen2View extends StatelessWidget {
         leadingWidth: 75,
         actions: [
           GestureDetector(
-            onTap: () {
-              //
-            },
+            onTap: updateItem,
+            // onTap: () {},
             child: Container(
               width: 75,
               // color: Colors.grey,

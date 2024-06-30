@@ -1,5 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:trinity_wizards_test/main.dart';
+import 'package:trinity_wizards_test/screen1/controllers/screen1_controller.dart';
 import 'package:trinity_wizards_test/screen1/models/screen1_model.dart';
 import 'package:trinity_wizards_test/screen2/views/screen2_view.dart';
 
@@ -44,6 +51,7 @@ class _Screen2ControllerState extends State<Screen2Controller> {
       emailController: emailController,
       dobController: dobController,
       selectDate: selectDate,
+      updateItem: updateItem,
     );
   }
 
@@ -59,5 +67,10 @@ class _Screen2ControllerState extends State<Screen2Controller> {
         dobController.text = DateFormat('dd/MM/yyyy').format(picked);
       });
     }
+  }
+
+  //
+  updateItem() {
+    //
   }
 }
